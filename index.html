@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>EV Login</title>
+
+    <style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background: #fff;
+    padding: 30px;
+    width: 320px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 5px;
+}
+
+.login-box p {
+    color: gray;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #4facfe;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.or {
+    margin: 15px 0;
+    color: gray;
+}
+
+.google {
+    background: #db4437;
+}
+
+span {
+    color: #4facfe;
+}
+</style>
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h2>Welcome</h2>
+        <p>Login to your account</p>
+
+        <input type="text" placeholder="Email or Phone Number">
+        <input type="password" placeholder="Password">
+
+        <div class="row">
+            <label><input type="checkbox"> Remember me</label>
+            <span>Forgot Password?</span>
+        </div>
+
+        <button>Login</button>
+
+        <p class="or">OR</p>
+
+        <button class="google" disabled>
+Login with Google
+</button>
+
+        <p>Create Account</p>
+
+    </div>
+
+</body>
+
+</html>
