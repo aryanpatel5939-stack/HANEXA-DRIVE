@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HANEXA DRIVE Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html,
+body{
+
+height:100%;
+background:#020817;
+color:white;
+overflow:hidden;
+
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+
+display:flex;
+height:100vh;
+width:100%;
+
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+
+width:280px;
+min-width:280px;
+height:100vh;
+background:linear-gradient(180deg,#071321,#04101b);
+border-right:1px solid rgba(255,255,255,0.05);
+
+display:flex;
+flex-direction:column;
+
+padding:22px 18px;
+
+overflow-y:auto;
+
+}
+
+/* LOGO */
+
+.logo{
+
+font-size:54px;
+font-weight:700;
+line-height:1.05;
+color:#6dff3c;
+
+margin-bottom:35px;
+
+}
+
+/* MENU */
+
+.menu{
+
+display:flex;
+flex-direction:column;
+gap:8px;
+
+}
+
+/* MENU LINKS */
+
+.menu a,
+.bottom a{
+
+text-decoration:none;
+color:white;
+
+display:flex;
+align-items:center;
+gap:15px;
+
+padding:16px 18px;
+
+border-radius:18px;
+
+font-size:18px;
+font-weight:500;
+
+transition:0.3s;
+
+}
+
+.menu a i,
+.bottom a i{
+
+width:24px;
+font-size:18px;
+
+}
+
+/* HOVER */
+
+.menu a:hover,
+.bottom a:hover{
+
+background:rgba(255,255,255,0.06);
+
+}
+
+/* ACTIVE */
+
+.menu a.active{
+
+background:linear-gradient(135deg,#00b7ff,#1ce3ff);
+
+box-shadow:
+0 0 25px rgba(0,183,255,0.45);
+
+}
+
+/* PUSH BOTTOM ITEMS */
+
+.bottom{
+
+margin-top:auto;
+
+display:flex;
+flex-direction:column;
+gap:8px;
+
+padding-top:25px;
+
+}
+
+/* LOGOUT */
+
+.logout{
+
+color:#ff6b6b !important;
+
+}
+
+/* ================= MAIN ================= */
+
+.main{
+
+flex:1;
+padding:28px;
+
+overflow-y:auto;
+
+}
+
+/* TOPBAR */
+
+.topbar{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:28px;
+
+flex-wrap:wrap;
+gap:20px;
+
+}
+
+.topbar h1{
+
+font-size:42px;
+font-weight:700;
+
+}
+
+.user{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+}
+
+.user i{
+
+font-size:40px;
+color:#d9e2ff;
+
+}
+/* USER PROFILE */
+
+.user{
+
+background:#0d1327;
+
+padding:10px 16px;
+
+border-radius:18px;
+
+cursor:pointer;
+
+transition:0.3s;
+
+position:relative;
+
+border:1px solid rgba(255,255,255,0.05);
+
+}
+
+.user:hover{
+
+box-shadow:0 0 20px rgba(0,183,255,0.25);
+
+}
+
+.user img{
+
+width:55px;
+height:55px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:2px solid #00c6ff;
+
+}
+
+.user-info{
+
+display:flex;
+flex-direction:column;
+
+}
+
+.user-info h3{
+
+font-size:16px;
+
+color:white;
+
+}
+
+.user-info p{
+
+font-size:12px;
+
+color:#9eb0cc;
+
+}
+
+/* PROFILE MENU */
+
+.profile-menu{
+
+position:absolute;
+
+top:90px;
+right:30px;
+
+background:#0d1327;
+
+border-radius:18px;
+
+padding:12px;
+
+width:220px;
+
+display:none;
+
+flex-direction:column;
+
+gap:10px;
+
+box-shadow:0 0 25px rgba(0,0,0,0.4);
+
+z-index:999;
+
+border:1px solid rgba(255,255,255,0.05);
+
+}
+
+.profile-menu button{
+
+background:#121b31;
+
+border:none;
+
+padding:14px;
+
+border-radius:14px;
+
+color:white;
+
+cursor:pointer;
+
+text-align:left;
+
+font-size:15px;
+
+transition:0.3s;
+
+display:flex;
+align-items:center;
+gap:12px;
+
+}
+
+.profile-menu button:hover{
+
+background:#1a2745;
+
+}
+/* GRID */
+
+.grid{
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+
+gap:22px;
+
+}
+
+/* CARD */
+
+.card{
+
+background:#0d1327;
+
+padding:28px;
+
+border-radius:22px;
+
+box-shadow:0 0 25px rgba(0,0,0,0.25);
+
+transition:0.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.card h3{
+
+font-size:18px;
+
+margin-bottom:20px;
+
+color:#dce6ff;
+
+}
+
+.value{
+
+font-size:55px;
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.desc{
+
+color:#b3bfd4;
+font-size:15px;
+
+}
+
+/* COLORS */
+
+.green{
+
+color:#00ff88;
+
+}
+
+.red{
+
+color:#ff8c8c;
+
+}
+
+.blue{
+
+color:#28c7ff;
+
+}
+
+.yellow{
+
+color:#ffcc33;
+
+}
+
+/* STATUS */
+
+.status{
+
+margin-top:28px;
+
+background:#0d1327;
+
+padding:18px 22px;
+
+border-radius:16px;
+
+display:flex;
+align-items:center;
+gap:12px;
+
+font-weight:600;
+
+color:#00ff88;
+
+}
+
+.status i{
+
+font-size:20px;
+
+}
+
+/* BUTTONS */
+
+.buttons{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+
+gap:18px;
+
+margin-top:28px;
+
+}
+
+.btn{
+
+border:none;
+
+padding:18px;
+
+border-radius:14px;
+
+font-size:16px;
+font-weight:600;
+
+color:white;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+
+}
+
+.btn-blue{
+
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+
+}
+
+.btn-green{
+
+background:linear-gradient(90deg,#00ff88,#4dff4d);
+
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+.grid{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+}
+
+@media(max-width:900px){
+
+.container{
+
+flex-direction:column;
+
+}
+
+.sidebar{
+
+width:100%;
+min-width:100%;
+height:auto;
+
+}
+
+.logo{
+
+font-size:42px;
+
+}
+
+.bottom{
+
+margin-top:20px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.main{
+
+padding:18px;
+
+}
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+.buttons{
+
+grid-template-columns:1fr;
+
+}
+
+.topbar h1{
+
+font-size:30px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+<div class="logo">
+HANEXA<br>DRIVE
+</div>
+
+<!-- MENU -->
+
+<div class="menu">
+
+<a href="home.html"
+class="active">
+
+<i class="fa-solid fa-house"></i>
+Home
+
+</a>
+
+<a href="realtimedata.html">
+
+<i class="fa-solid fa-chart-line"></i>
+Real-time Data
+
+</a>
+
+<a href="batteryhealth.html">
+
+<i class="fa-solid fa-battery-three-quarters"></i>
+Battery Health
+
+</a>
+
+<a href="cooling.html">
+
+<i class="fa-regular fa-snowflake"></i>
+Cooling System
+
+</a>
+
+<a href="route.html">
+
+<i class="fa-regular fa-map"></i>
+Map & Route
+
+</a>
+
+<a href="document.html">
+
+<i class="fa-regular fa-file"></i>
+Documents
+
+</a>
+
+<a href="alert.html">
+
+<i class="fa-regular fa-bell"></i>
+Alerts
+
+</a>
+
+<a href="helpcenter.html">
+
+<i class="fa-solid fa-headset"></i>
+Help Center
+
+</a>
+
+</div>
+
+<!-- BOTTOM MENU -->
+
+<div class="bottom">
+
+<a href="about.html">
+
+<i class="fa-solid fa-circle-info"></i>
+About
+
+</a>
+
+<a href="setting.html">
+
+<i class="fa-solid fa-gear"></i>
+Settings
+
+</a>
+
+<a href="#"
+class="logout"
+onclick="logoutUser()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+
+</a>
+</div>
+
+</div>
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<h1>
+HANEXA DRIVE SYSTEM
+</h1>
+
+<div class="user" onclick="toggleProfileMenu()">
+
+<img id="userPhoto"
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+<div class="user-info">
+
+<h3 id="userName">User</h3>
+
+<p id="userEmail">user@gmail.com</p>
+
+</div>
+
+<i class="fa-solid fa-angle-down"></i>
+
+</div>
+
+<!-- PROFILE DROPDOWN -->
+
+<div class="profile-menu" id="profileMenu">
+
+<button onclick="openProfile()">
+<i class="fa-solid fa-user"></i>
+My Profile
+</button>
+
+<button onclick="openSettings()">
+<i class="fa-solid fa-gear"></i>
+Settings
+</button>
+
+<button onclick="logoutUser()">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</button>
+
+</div>
+</div>
+
+<!-- GRID -->
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Battery Status</h3>
+
+<div class="value green"
+id="battery">
+78%
+</div>
+
+<div class="desc">
+Battery Performing Normally
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Temperature</h3>
+
+<div class="value red"
+id="temp">
+35°C
+</div>
+
+<div class="desc">
+Cooling Stable
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Estimated Range</h3>
+
+<div class="value blue"
+id="range">
+120km
+</div>
+
+<div class="desc">
+Remaining Distance
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Motor RPM</h3>
+
+<div class="value yellow"
+id="rpm">
+3250
+</div>
+
+<div class="desc">
+Motor Running Smoothly
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Charging</h3>
+
+<div class="value green"
+id="charge">
+ACTIVE
+</div>
+
+<div class="desc">
+Fast Charging Enabled
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Vehicle Speed</h3>
+
+<div class="value blue"
+id="speed">
+68 km/h
+</div>
+
+<div class="desc">
+Live Speed Monitoring
+</div>
+
+</div>
+
+</div>
+
+<!-- STATUS -->
+
+<div class="status">
+
+<i class="fas fa-circle-check"></i>
+
+All Systems Working Properly • No Active Faults
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="buttons">
+
+<button class="btn btn-blue"
+onclick="systemCheck()">
+
+System Check
+
+</button>
+
+<button class="btn btn-green"
+onclick="findCharger()">
+
+Find Charger
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* LIVE DATA */
+
+let battery = 78;
+let temp = 35;
+let range = 120;
+let rpm = 3250;
+let speed = 68;
+
+setInterval(()=>{
+
+battery += Math.random() > 0.5 ? 1 : -1;
+battery = Math.max(72, Math.min(95, battery));
+
+temp += Math.random() > 0.5 ? 1 : -1;
+temp = Math.max(30, Math.min(40, temp));
+
+range = battery + 40;
+
+rpm += Math.floor(Math.random()*200)-100;
+rpm = Math.max(2500, Math.min(4500, rpm));
+
+speed += Math.floor(Math.random()*6)-3;
+speed = Math.max(45, Math.min(90, speed));
+
+document.getElementById("battery")
+.innerHTML = battery + "%";
+
+document.getElementById("temp")
+.innerHTML = temp + "°C";
+
+document.getElementById("range")
+.innerHTML = range + "km";
+
+document.getElementById("rpm")
+.innerHTML = rpm;
+
+document.getElementById("speed")
+.innerHTML = speed + " km/h";
+
+},5000);
+
+/* SYSTEM CHECK */
+
+function systemCheck(){
+
+const status =
+document.querySelector(".status");
+
+status.innerHTML = `
+<i class="fas fa-spinner fa-spin"></i>
+Running Full System Diagnostics...
+`;
+
+status.style.color = "#ffcc33";
+
+setTimeout(()=>{
+
+status.innerHTML = `
+<i class="fas fa-circle-check"></i>
+System Check Complete • All Systems Normal
+`;
+
+status.style.color = "#00ff88";
+
+},3000);
+
+}
+
+/* FIND CHARGER */
+
+function findCharger(){
+
+window.open(
+"https://www.google.com/maps/search/EV+charger+near+me"
+);
+
+}
+/* LOGOUT FUNCTION */
+
+function logoutUser(){
+
+let confirmLogout =
+confirm("Are you sure you want to logout?");
+
+if(confirmLogout){
+
+localStorage.removeItem("loggedIn");
+
+window.location.href = "index.html";
+
+}
+
+}
+
+/* PROFILE MENU */
+
+function toggleProfileMenu(){
+
+const menu =
+document.getElementById("profileMenu");
+
+if(menu.style.display === "flex"){
+
+menu.style.display = "none";
+
+}else{
+
+menu.style.display = "flex";
+
+}
+
+}
+
+/* OPEN PROFILE */
+
+function openProfile(){
+
+let newName =
+prompt("Enter Your Name");
+
+let newEmail =
+prompt("Enter Your Email");
+
+if(newName){
+
+localStorage.setItem(
+"userName",
+newName
+);
+
+document.getElementById("userName")
+.innerHTML = newName;
+
+}
+
+if(newEmail){
+
+localStorage.setItem(
+"userEmail",
+newEmail
+);
+
+document.getElementById("userEmail")
+.innerHTML = newEmail;
+
+}
+
+}
+
+/* SETTINGS */
+
+function openSettings(){
+
+window.location.href =
+"setting.html";
+
+}
+
+/* LOAD USER DATA */
+
+window.onload = function(){
+
+let savedName =
+localStorage.getItem("userName");
+
+let savedEmail =
+localStorage.getItem("userEmail");
+
+if(savedName){
+
+document.getElementById("userName")
+.innerHTML = savedName;
+
+}
+
+if(savedEmail){
+
+document.getElementById("userEmail")
+.innerHTML = savedEmail;
+
+}
+
+}
+</script>
+
+</body>
+</html>

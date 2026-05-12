@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>HANEXA DRIVE - Real Time Data</title>
+
+    <!-- GOOGLE FONT -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CHART JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        body {
+
+            background: #020812;
+            color: white;
+            overflow-x: hidden;
+
+        }
+
+        /* ================= LAYOUT ================= */
+
+        .layout {
+
+            display: flex;
+            min-height: 100vh;
+
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+
+    width: 280px;
+    background: linear-gradient(180deg, #071321, #04101b);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+
+}
+
+        .logo {
+
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #6dff3c;
+            margin-bottom: 40px;
+
+        }
+
+        .menu {
+
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+        }
+
+        .menu a {
+
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 18px;
+            border-radius: 18px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: 0.3s;
+
+        }
+
+        .menu a i {
+
+            width: 22px;
+            text-align: center;
+
+        }
+
+        .menu a:hover {
+
+            background: rgba(255, 255, 255, 0.05);
+
+        }
+
+        .menu a.active {
+
+            background: linear-gradient(135deg, #00b7ff, #1cf0ff);
+            color: white;
+            box-shadow: 0 0 25px rgba(0, 183, 255, 0.45);
+
+        }
+
+        .bottom-menu {
+
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+        }
+
+        .logout {
+
+            color: #ff6b6b !important;
+
+        }
+
+        /* ================= MAIN CONTENT ================= */
+
+        .content {
+
+            flex: 1;
+            padding: 30px;
+
+        }
+
+        .topbar {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+
+        }
+
+        .title {
+
+            font-size: 42px;
+            font-weight: 700;
+
+        }
+
+        .live-status {
+
+            background: rgba(0, 255, 115, 0.12);
+            color: #00ff73;
+            padding: 12px 24px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+
+        }
+
+        .dot {
+
+            width: 12px;
+            height: 12px;
+            background: #00ff73;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+
+        }
+
+        @keyframes blink {
+
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 1;
+            }
+
+        }
+
+        /* CARDS */
+
+        .cards {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+
+        }
+
+        .card {
+
+            background: linear-gradient(180deg, #071321, #04101b);
+            padding: 25px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+
+        }
+
+        .card i {
+
+            font-size: 28px;
+            margin-bottom: 15px;
+
+        }
+
+        .card h2 {
+
+            font-size: 35px;
+            margin-bottom: 8px;
+
+        }
+
+        .card p {
+
+            color: #90a3b6;
+
+        }
+
+        /* COLORS */
+
+        .green {
+            color: #00ff73;
+        }
+
+        .blue {
+            color: #00b7ff;
+        }
+
+        .orange {
+            color: orange;
+        }
+
+        .purple {
+            color: #b66cff;
+        }
+
+        .cyan {
+            color: #00fff2;
+        }
+
+        .pink {
+            color: #ff66c4;
+        }
+
+        /* MAIN */
+
+        .main {
+
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr;
+            gap: 25px;
+
+        }
+
+        .chart-box,
+        .status-box {
+
+            background: linear-gradient(180deg, #071321, #04101b);
+            border-radius: 25px;
+            padding: 25px;
+
+        }
+
+        .section-title {
+
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 20px;
+
+        }
+
+        canvas {
+
+            width: 100%;
+            height: 430px !important;
+
+        }
+
+        /* BUTTONS */
+
+        .controls {
+
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+
+        }
+
+        button {
+
+            border: none;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+
+        }
+
+        button:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+        .start {
+
+            background: linear-gradient(135deg, #00c853, #00ff73);
+
+        }
+
+        .stop {
+
+            background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
+
+        }
+
+        .reset {
+
+            background: linear-gradient(135deg, #0d6efd, #2196ff);
+
+        }
+
+        /* STATUS */
+
+        .status-item {
+
+            margin-bottom: 25px;
+
+        }
+
+        .status-top {
+
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+        }
+
+        .status-top h3 {
+
+            font-size: 17px;
+
+        }
+
+        .progress {
+
+            width: 100%;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+
+        }
+
+        .bar {
+
+            height: 100%;
+            border-radius: 20px;
+            transition: 1s linear;
+
+        }
+
+        .battery-bar {
+            background: linear-gradient(90deg, #00ff73, #00d084);
+        }
+
+        .temp-bar {
+            background: linear-gradient(90deg, orange, #ffc107);
+        }
+
+        .voltage-bar {
+            background: linear-gradient(90deg, #00b7ff, #2196ff);
+        }
+
+        .current-bar {
+            background: linear-gradient(90deg, #b66cff, #7b3dff);
+        }
+
+        .cooling-bar {
+            background: linear-gradient(90deg, #00fff2, #00bcd4);
+        }
+
+        .range-bar {
+            background: linear-gradient(90deg, #ff66c4, #ff2f92);
+        }
+
+        /* TABLE */
+
+        .table-box {
+
+            margin-top: 30px;
+            background: linear-gradient(180deg, #071321, #04101b);
+            border-radius: 25px;
+            padding: 25px;
+            overflow-x: auto;
+
+        }
+
+        table {
+
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 950px;
+
+        }
+
+        th,
+        td {
+
+            padding: 18px;
+            text-align: left;
+
+        }
+
+        th {
+
+            color: #8fa2b5;
+            background: rgba(255, 255, 255, 0.04);
+
+        }
+
+        tbody tr {
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        }
+
+        tbody tr:hover {
+
+            background: rgba(255, 255, 255, 0.03);
+
+        }
+
+        .healthy {
+
+            color: #00ff73;
+            font-weight: 600;
+
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:1200px) {
+
+            .sidebar {
+
+                width: 240px;
+
+            }
+
+        }
+
+        @media(max-width:1000px) {
+
+            .main {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+        @media(max-width:850px) {
+
+            .layout {
+
+                flex-direction: column;
+
+            }
+
+            .sidebar {
+
+                width: 100%;
+                height: auto;
+                position: relative;
+
+            }
+
+            .content {
+
+                padding: 20px;
+
+            }
+
+        }
+
+        @media(max-width:768px) {
+
+            .title {
+
+                font-size: 30px;
+
+            }
+
+            .logo {
+
+                font-size: 38px;
+
+            }
+
+            .menu a {
+
+                font-size: 16px;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="layout">
+
+       <!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div>
+
+        <div class="logo">
+            HANEXA<br>DRIVE
+        </div>
+
+        <div class="menu">
+
+            <a href="home.html">
+                <i class="fa-solid fa-house"></i>
+                Home
+            </a>
+
+            <a href="realtimedata.html" class="active">
+                <i class="fa-solid fa-chart-line"></i>
+                Real-time Data
+            </a>
+
+            <a href="batteryhealth.html">
+                <i class="fa-solid fa-battery-three-quarters"></i>
+                Battery Health
+            </a>
+
+            <a href="cooling.html">
+                <i class="fa-regular fa-snowflake"></i>
+                Cooling System
+            </a>
+
+            <a href="route.html">
+                <i class="fa-regular fa-map"></i>
+                Map & Route
+            </a>
+
+            <a href="document.html">
+                <i class="fa-regular fa-file"></i>
+                Documents
+            </a>
+
+            <a href="alert.html">
+                <i class="fa-regular fa-bell"></i>
+                Alerts
+            </a>
+
+            <a href="helpcenter.html">
+                <i class="fa-solid fa-headset"></i>
+                Help Center
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="bottom-menu">
+
+        <a href="about.html" class="menu-link"
+            style="text-decoration:none;color:white;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:18px;font-size:18px;font-weight:500;">
+
+            <i class="fa-solid fa-circle-info"></i>
+            About
+
+        </a>
+
+        <a href="setting.html" class="menu-link"
+            style="text-decoration:none;color:white;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:18px;font-size:18px;font-weight:500;">
+
+            <i class="fa-solid fa-gear"></i>
+            Settings
+
+        </a>
+
+<a href="#"
+   class="menu-link logout"
+   onclick="logoutUser()"
+   style="text-decoration:none;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:18px;font-size:18px;font-weight:500;">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout
+
+</a>
+    </div>
+
+</div>
+        <!-- MAIN CONTENT -->
+
+        <div class="content">
+
+            <!-- TOPBAR -->
+
+            <div class="topbar">
+
+                <div class="title">
+                    REAL TIME DATA
+                </div>
+
+                <div class="live-status">
+
+                    <div class="dot"></div>
+
+                    EV LIVE MONITORING
+
+                </div>
+
+            </div>
+
+            <!-- CARDS -->
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <i class="fa-solid fa-battery-three-quarters green"></i>
+
+                    <h2 id="batteryText">94%</h2>
+
+                    <p>Battery Percentage</p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-bolt blue"></i>
+
+                    <h2 id="voltageText">72.4V</h2>
+
+                    <p>Battery Voltage</p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-wave-square purple"></i>
+
+                    <h2 id="currentText">18A</h2>
+
+                    <p>Motor Current</p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-temperature-three-quarters orange"></i>
+
+                    <h2 id="tempText">31°C</h2>
+
+                    <p>Battery Temperature</p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-fan cyan"></i>
+
+                    <h2 id="coolingText">78%</h2>
+
+                    <p>Cooling Efficiency</p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-gauge-high pink"></i>
+
+                    <h2 id="speedText">42 km/h</h2>
+
+                    <p>Current Speed</p>
+
+                </div>
+
+                <div class="card">
+
+                    <i class="fa-solid fa-road green"></i>
+
+                    <h2 id="distanceText">12.4 km</h2>
+
+                    <p>Total Distance</p>
+
+                </div>
+
+            </div>
+
+            <!-- MAIN -->
+
+            <div class="main">
+
+                <!-- CHART -->
+
+                <div class="chart-box">
+
+                    <div class="section-title">
+                        Live EV Analytics
+                    </div>
+
+                    <canvas id="liveChart"></canvas>
+
+                    <div class="controls">
+
+                        <button class="start"
+                            onclick="startMonitoring()">
+
+                            <i class="fa-solid fa-play"></i>
+                            Start
+
+                        </button>
+
+                        <button class="stop"
+                            onclick="stopMonitoring()">
+
+                            <i class="fa-solid fa-stop"></i>
+                            Stop
+
+                        </button>
+
+                        <button class="reset"
+                            onclick="resetMonitoring()">
+
+                            <i class="fa-solid fa-rotate-right"></i>
+                            Reset
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- STATUS -->
+
+                <div class="status-box">
+
+                    <div class="section-title">
+                        System Status
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-top">
+
+                            <h3>Battery Health</h3>
+
+                            <span id="batteryHealth">
+                                Excellent
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div class="bar battery-bar"
+                                id="batteryBar"
+                                style="width:94%"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-top">
+
+                            <h3>Temperature Status</h3>
+
+                            <span id="tempHealth">
+                                Stable
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div class="bar temp-bar"
+                                id="tempBar"
+                                style="width:35%"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-top">
+
+                            <h3>Voltage Stability</h3>
+
+                            <span id="voltageHealth">
+                                Normal
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div class="bar voltage-bar"
+                                id="voltageBar"
+                                style="width:88%"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-top">
+
+                            <h3>Motor Current Load</h3>
+
+                            <span id="currentHealth">
+                                Medium
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div class="bar current-bar"
+                                id="currentBar"
+                                style="width:45%"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-top">
+
+                            <h3>Cooling Performance</h3>
+
+                            <span id="coolingHealth">
+                                Efficient
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div class="bar cooling-bar"
+                                id="coolingBar"
+                                style="width:78%"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-top">
+
+                            <h3>Remaining Range</h3>
+
+                            <span id="rangeHealth">
+                                108 km
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div class="bar range-bar"
+                                id="rangeBar"
+                                style="width:90%"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+
+            <div class="table-box">
+
+                <div class="section-title">
+                    EV Live Logs
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Time</th>
+                            <th>Battery</th>
+                            <th>Voltage</th>
+                            <th>Current</th>
+                            <th>Temperature</th>
+                            <th>Speed</th>
+                            <th>Distance</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="logTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+// EV DATA
+
+        let battery = 94;
+        let voltage = 72.4;
+        let current = 18;
+        let temperature = 31;
+        let cooling = 78;
+        let speed = 42;
+        let distance = 12.4;
+
+        let monitoring;
+
+        // CHART
+
+        const ctx =
+            document.getElementById('liveChart')
+                .getContext('2d');
+
+        const liveChart =
+            new Chart(ctx, {
+
+                type: 'line',
+
+                data: {
+
+                    labels: [],
+
+                    datasets: [
+
+                        {
+                            label: 'Battery %',
+                            data: [],
+                            borderColor: '#00ff73',
+                            borderWidth: 3,
+                            tension: 0.4
+                        },
+
+                        {
+                            label: 'Voltage (V)',
+                            data: [],
+                            borderColor: '#00b7ff',
+                            borderWidth: 3,
+                            tension: 0.4
+                        },
+
+                        {
+                            label: 'Current (A)',
+                            data: [],
+                            borderColor: '#b66cff',
+                            borderWidth: 3,
+                            tension: 0.4
+                        },
+
+                        {
+                            label: 'Temperature °C',
+                            data: [],
+                            borderColor: '#ffb300',
+                            borderWidth: 3,
+                            tension: 0.4
+                        },
+
+                        {
+                            label: 'Cooling %',
+                            data: [],
+                            borderColor: '#00fff2',
+                            borderWidth: 3,
+                            tension: 0.4
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            labels: {
+
+                                color: 'white'
+
+                            }
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+
+                                color: '#9eb0c3'
+
+                            }
+
+                        },
+
+                        y: {
+
+                            ticks: {
+
+                                color: '#9eb0c3'
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        // UPDATE DATA
+
+        function updateData() {
+
+            speed += (Math.random() * 6 - 3);
+
+            speed = Math.max(25,
+                Math.min(65, speed));
+
+            distance += speed / 3600;
+
+            current =
+                10 + (speed / 65) * 22;
+
+            voltage -= current * 0.0025;
+
+            if (voltage < 48) {
+
+                voltage = 72.4;
+
+            }
+
+            battery -= current * 0.0009;
+
+            if (battery < 5) {
+
+                battery = 94;
+
+            }
+
+            temperature +=
+                (current / 100);
+
+            temperature -=
+                (cooling / 500);
+
+            temperature =
+                Math.max(28,
+                    Math.min(48, temperature));
+
+            cooling =
+                90 - ((temperature - 28) * 2);
+
+            cooling =
+                Math.max(50,
+                    Math.min(92, cooling));
+
+            document.getElementById("batteryText")
+                .innerText =
+                battery.toFixed(1) + "%";
+
+            document.getElementById("voltageText")
+                .innerText =
+                voltage.toFixed(1) + "V";
+
+            document.getElementById("currentText")
+                .innerText =
+                current.toFixed(1) + "A";
+
+            document.getElementById("tempText")
+                .innerText =
+                temperature.toFixed(1) + "°C";
+
+            document.getElementById("coolingText")
+                .innerText =
+                cooling.toFixed(0) + "%";
+
+            document.getElementById("speedText")
+                .innerText =
+                speed.toFixed(0) + " km/h";
+
+            document.getElementById("distanceText")
+                .innerText =
+                distance.toFixed(1) + " km";
+
+            document.getElementById("batteryBar")
+                .style.width =
+                battery + "%";
+
+            document.getElementById("tempBar")
+                .style.width =
+                temperature * 2 + "%";
+
+            document.getElementById("voltageBar")
+                .style.width =
+                voltage + "%";
+
+            document.getElementById("currentBar")
+                .style.width =
+                current * 2 + "%";
+
+            document.getElementById("coolingBar")
+                .style.width =
+                cooling + "%";
+
+            let range =
+                battery * 1.15;
+
+            document.getElementById("rangeBar")
+                .style.width =
+                battery + "%";
+
+            document.getElementById("rangeHealth")
+                .innerText =
+                range.toFixed(0) + " km";
+
+            document.getElementById("batteryHealth")
+                .innerText =
+                battery > 70 ?
+                "Excellent" :
+                battery > 40 ?
+                "Good" :
+                "Low";
+
+            document.getElementById("tempHealth")
+                .innerText =
+                temperature < 38 ?
+                "Stable" :
+                "Heating";
+
+            document.getElementById("voltageHealth")
+                .innerText =
+                voltage > 60 ?
+                "Normal" :
+                "Dropping";
+
+            document.getElementById("currentHealth")
+                .innerText =
+                current < 20 ?
+                "Low Load" :
+                current < 28 ?
+                "Medium" :
+                "High Load";
+
+            document.getElementById("coolingHealth")
+                .innerText =
+                cooling > 70 ?
+                "Efficient" :
+                "Weak";
+
+            const time =
+                new Date().toLocaleTimeString();
+
+            liveChart.data.labels.push(time);
+
+            liveChart.data.datasets[0].data.push(
+                battery.toFixed(1));
+
+            liveChart.data.datasets[1].data.push(
+                voltage.toFixed(1));
+
+            liveChart.data.datasets[2].data.push(
+                current.toFixed(1));
+
+            liveChart.data.datasets[3].data.push(
+                temperature.toFixed(1));
+
+            liveChart.data.datasets[4].data.push(
+                cooling.toFixed(1));
+
+            if (liveChart.data.labels.length > 15) {
+
+                liveChart.data.labels.shift();
+
+                liveChart.data.datasets.forEach(dataset => {
+
+                    dataset.data.shift();
+
+                });
+
+            }
+
+            liveChart.update();
+
+            addLog(time);
+
+        }
+
+        // TABLE LOGS
+
+        function addLog(time) {
+
+            const table =
+                document.getElementById("logTable");
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
+
+            <td>${time}</td>
+
+            <td>${battery.toFixed(1)}%</td>
+
+            <td>${voltage.toFixed(1)}V</td>
+
+            <td>${current.toFixed(1)}A</td>
+
+            <td>${temperature.toFixed(1)}°C</td>
+
+            <td>${speed.toFixed(0)} km/h</td>
+
+            <td>${distance.toFixed(1)} km</td>
+
+            <td class="healthy">
+                Running
+            </td>
+
+            `;
+
+            table.prepend(row);
+
+            if (table.rows.length > 8) {
+
+                table.deleteRow(8);
+
+            }
+
+        }
+
+        // START
+
+        function startMonitoring() {
+
+            if (!monitoring) {
+
+                monitoring =
+                    setInterval(updateData, 2000);
+
+                toast("EV Monitoring Started");
+
+            }
+
+        }
+
+        // STOP
+
+        function stopMonitoring() {
+
+            clearInterval(monitoring);
+
+            monitoring = null;
+
+            toast("Monitoring Stopped");
+
+        }
+
+        // RESET
+
+        function resetMonitoring() {
+
+            stopMonitoring();
+
+            battery = 94;
+            voltage = 72.4;
+            current = 18;
+            temperature = 31;
+            cooling = 78;
+            speed = 42;
+            distance = 12.4;
+
+            liveChart.data.labels = [];
+
+            liveChart.data.datasets.forEach(dataset => {
+
+                dataset.data = [];
+
+            });
+
+            liveChart.update();
+
+            document.getElementById("logTable")
+                .innerHTML = "";
+
+            updateData();
+
+            toast("System Reset");
+
+        }
+
+        // TOAST
+
+        function toast(message) {
+
+            const toast =
+                document.createElement("div");
+
+            toast.innerText = message;
+
+            toast.style.position = "fixed";
+            toast.style.bottom = "30px";
+            toast.style.right = "30px";
+            toast.style.background = "#0d6efd";
+            toast.style.padding = "14px 24px";
+            toast.style.color = "white";
+            toast.style.borderRadius = "14px";
+            toast.style.fontWeight = "600";
+            toast.style.zIndex = "9999";
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            }, 2500);
+
+        }
+
+        // AUTO START
+
+        startMonitoring();
+
+    </script>
+<script>
+
+function logoutUser() {
+
+    let confirmLogout =
+        confirm("Are you sure you want to logout?");
+
+    if(confirmLogout) {
+
+        // login session remove
+        localStorage.removeItem("loggedIn");
+
+        // login page open
+        window.location.href = "index.html";
+
+    }
+
+}
+
+</script>
+</body>
+
+</html>
+    

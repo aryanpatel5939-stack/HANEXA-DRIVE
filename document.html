@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>HANEXA DRIVE Documents</title>
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#020812;
+            color:white;
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:280px;
+            background:linear-gradient(180deg,#071321,#04101b);
+            padding:30px 22px;
+            border-right:1px solid rgba(255,255,255,0.05);
+            position:fixed;
+            left:0;
+            top:0;
+            bottom:0;
+            overflow-y:auto;
+        }
+
+        .logo{
+            color:#61e65c;
+            font-size:42px;
+            font-weight:700;
+            margin-bottom:45px;
+        }
+
+        .menu{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .menu a{
+            text-decoration:none;
+            color:#d8e0ea;
+        }
+
+        .menu-item{
+            display:flex;
+            align-items:center;
+            gap:16px;
+            padding:16px 18px;
+            border-radius:16px;
+            font-size:18px;
+            transition:0.3s;
+            cursor:pointer;
+        }
+
+        .menu-item:hover{
+            background:rgba(255,255,255,0.06);
+        }
+
+        .menu-item.active{
+            background:#0d6efd;
+            color:white;
+            box-shadow:0 0 25px rgba(13,110,253,0.4);
+        }
+
+        .logout{
+            color:#ff5f5f;
+            margin-top:18px;
+        }
+
+        /* MAIN CONTENT */
+
+        .main-content{
+            margin-left:280px;
+            width:calc(100% - 280px);
+            padding:30px;
+        }
+
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:30px;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        .title{
+            font-size:42px;
+            font-weight:700;
+        }
+
+        .upload-section{
+            display:flex;
+            gap:15px;
+            flex-wrap:wrap;
+        }
+
+        .upload-btn{
+            background:linear-gradient(135deg,#0d6efd,#1688ff);
+            border:none;
+            color:white;
+            padding:15px 25px;
+            border-radius:15px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .upload-btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 0 20px rgba(13,110,253,0.4);
+        }
+
+        #fileInput{
+            display:none;
+        }
+
+        /* STATS */
+
+        .stats-container{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:20px;
+            margin-bottom:30px;
+        }
+
+        .stat-card{
+            background:linear-gradient(180deg,#071321,#04101b);
+            border-radius:22px;
+            padding:25px;
+            border:1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-card i{
+            font-size:28px;
+            color:#0d8bff;
+            margin-bottom:12px;
+        }
+
+        .stat-card h2{
+            font-size:32px;
+            margin-bottom:5px;
+        }
+
+        .stat-card p{
+            color:#9cafbf;
+        }
+
+        /* DOCUMENT BOX */
+
+        .documents-box{
+            background:linear-gradient(180deg,#071321,#04101b);
+            border-radius:25px;
+            padding:25px;
+            border:1px solid rgba(255,255,255,0.05);
+        }
+
+        .documents-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        .documents-header h2{
+            font-size:30px;
+        }
+
+        .search-box{
+            position:relative;
+        }
+
+        .search-box input{
+            width:300px;
+            padding:14px 18px 14px 45px;
+            border-radius:14px;
+            border:none;
+            outline:none;
+            background:rgba(255,255,255,0.05);
+            color:white;
+            font-size:15px;
+        }
+
+        .search-box i{
+            position:absolute;
+            top:15px;
+            left:15px;
+            color:#8da1b4;
+        }
+
+        .table-wrapper{
+            overflow-x:auto;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            min-width:950px;
+        }
+
+        thead{
+            background:rgba(255,255,255,0.04);
+        }
+
+        th,td{
+            padding:18px;
+            text-align:left;
+        }
+
+        th{
+            color:#93a4b6;
+            font-size:14px;
+            font-weight:500;
+        }
+
+        tbody tr{
+            border-bottom:1px solid rgba(255,255,255,0.05);
+            transition:0.3s;
+        }
+
+        tbody tr:hover{
+            background:rgba(255,255,255,0.03);
+        }
+
+        .doc-info{
+            display:flex;
+            align-items:center;
+            gap:15px;
+        }
+
+        .doc-icon{
+            width:55px;
+            height:55px;
+            border-radius:15px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:22px;
+        }
+
+        .pdf{
+            background:rgba(255,0,0,0.15);
+            color:#ff4c4c;
+        }
+
+        .excel{
+            background:rgba(0,255,115,0.15);
+            color:#0fff80;
+        }
+
+        .word{
+            background:rgba(0,119,255,0.15);
+            color:#2196ff;
+        }
+
+        .image{
+            background:rgba(255,193,7,0.15);
+            color:#ffc107;
+        }
+
+        .other{
+            background:rgba(180,180,180,0.15);
+            color:#d0d0d0;
+        }
+
+        .status{
+            background:rgba(0,255,102,0.15);
+            color:#11ff68;
+            padding:10px 18px;
+            border-radius:12px;
+            width:fit-content;
+            font-weight:600;
+        }
+
+        .actions{
+            display:flex;
+            gap:12px;
+        }
+
+        .action-btn{
+            width:42px;
+            height:42px;
+            border-radius:12px;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+            color:white;
+            transition:0.3s;
+        }
+
+        .view-btn{
+            background:#0d6efd;
+        }
+
+        .download-btn{
+            background:#00b894;
+        }
+
+        .delete-btn{
+            background:#ff4d4d;
+        }
+
+        .action-btn:hover{
+            transform:scale(1.08);
+        }
+
+        .empty-box{
+            text-align:center;
+            padding:60px 20px;
+            color:#90a2b4;
+        }
+
+        .empty-box i{
+            font-size:60px;
+            margin-bottom:20px;
+            color:#0d6efd;
+        }
+
+        .empty-box h2{
+            margin-bottom:10px;
+        }
+
+        @media(max-width:900px){
+
+            body{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                position:relative;
+                height:auto;
+            }
+
+            .main-content{
+                width:100%;
+                margin-left:0;
+            }
+
+            .search-box input{
+                width:100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        HANEXA DRIVE
+    </div>
+
+    <div class="menu">
+
+        <a href="home.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-house"></i>
+                Home
+            </div>
+        </a>
+
+        <a href="realtimedata.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-chart-line"></i>
+                Real-time Data
+            </div>
+        </a>
+
+        <a href="batteryhealth.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-battery-half"></i>
+                Battery Health
+            </div>
+        </a>
+
+        <a href="cooling.html">
+            <div class="menu-item">
+                <i class="fa-regular fa-snowflake"></i>
+                Cooling System
+            </div>
+        </a>
+
+        <a href="route.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-map"></i>
+                Map & Route
+            </div>
+        </a>
+
+        <a href="document.html">
+            <div class="menu-item active">
+                <i class="fa-solid fa-file"></i>
+                Documents
+            </div>
+        </a>
+
+        <a href="alert.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-bell"></i>
+                Alerts
+            </div>
+        </a>
+
+        <a href="helpcenter.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-headset"></i>
+                Help Center
+            </div>
+        </a>
+
+        <a href="about.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-circle-info"></i>
+                About
+            </div>
+        </a>
+
+        <a href="setting.html">
+            <div class="menu-item">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </div>
+        </a>
+
+       <a href="#"
+onclick="logoutUser()">
+
+    <div class="menu-item logout">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Logout
+
+    </div>
+
+</a>
+    </div>
+
+</aside>
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div class="title">
+                DOCUMENTS
+            </div>
+
+            <div class="upload-section">
+
+                <input type="file" id="fileInput" multiple>
+
+                <button class="upload-btn"
+                    onclick="document.getElementById('fileInput').click()">
+
+                    <i class="fa-solid fa-upload"></i>
+                    Upload Documents
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- STATS -->
+
+        <div class="stats-container">
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-file"></i>
+
+                <h2 id="totalDocs">0</h2>
+
+                <p>Total Uploaded Documents</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-hard-drive"></i>
+
+                <h2 id="storageUsed">0 MB</h2>
+
+                <p>Total Storage Used</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                <h2>Unlimited</h2>
+
+                <p>Multiple File Upload Support</p>
+
+            </div>
+
+        </div>
+
+        <!-- DOCUMENTS -->
+
+        <div class="documents-box">
+
+            <div class="documents-header">
+
+                <h2>Uploaded Documents</h2>
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-search"></i>
+
+                    <input type="text"
+                        id="searchInput"
+                        placeholder="Search uploaded files...">
+
+                </div>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table id="documentsTable" style="display:none;">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Document</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                            <th>Upload Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tableBody"></tbody>
+
+                </table>
+
+                <div class="empty-box" id="emptyBox">
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                    <h2>No Documents Uploaded</h2>
+
+                    <p>
+                        Upload your HANEXA DRIVE documents here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        let documents = [];
+
+        const fileInput = document.getElementById("fileInput");
+        const tableBody = document.getElementById("tableBody");
+        const documentsTable = document.getElementById("documentsTable");
+        const emptyBox = document.getElementById("emptyBox");
+
+        fileInput.addEventListener("change", function () {
+
+            const files = Array.from(this.files);
+
+            files.forEach(file => {
+
+                const fileURL = URL.createObjectURL(file);
+
+                let type = "Other";
+                let icon = "fa-file";
+                let className = "other";
+
+                const ext = file.name.split(".").pop().toLowerCase();
+
+                if (ext === "pdf") {
+                    type = "PDF";
+                    icon = "fa-file-pdf";
+                    className = "pdf";
+                }
+
+                else if (
+                    ext === "xlsx" ||
+                    ext === "xls" ||
+                    ext === "csv"
+                ) {
+                    type = "Excel";
+                    icon = "fa-file-excel";
+                    className = "excel";
+                }
+
+                else if (
+                    ext === "doc" ||
+                    ext === "docx"
+                ) {
+                    type = "Word";
+                    icon = "fa-file-word";
+                    className = "word";
+                }
+
+                else if (
+                    ext === "png" ||
+                    ext === "jpg" ||
+                    ext === "jpeg"
+                ) {
+                    type = "Image";
+                    icon = "fa-file-image";
+                    className = "image";
+                }
+
+                documents.push({
+                    name: file.name,
+                    size: (file.size / 1024 / 1024).toFixed(2) + " MB",
+                    date: new Date().toLocaleDateString(),
+                    type: type,
+                    icon: icon,
+                    className: className,
+                    url: fileURL
+                });
+
+            });
+
+            renderDocuments(documents);
+
+            showToast("Documents Uploaded Successfully");
+
+        });
+
+        function renderDocuments(data) {
+
+            tableBody.innerHTML = "";
+
+            if (data.length === 0) {
+
+                documentsTable.style.display = "none";
+                emptyBox.style.display = "block";
+
+            }
+
+            else {
+
+                documentsTable.style.display = "table";
+                emptyBox.style.display = "none";
+
+            }
+
+            data.forEach((doc, index) => {
+
+                tableBody.innerHTML += `
+
+                <tr>
+
+                    <td>
+
+                        <div class="doc-info">
+
+                            <div class="doc-icon ${doc.className}">
+                                <i class="fa-solid ${doc.icon}"></i>
+                            </div>
+
+                            <div>
+                                <h3>${doc.name}</h3>
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td>${doc.type}</td>
+
+                    <td>${doc.size}</td>
+
+                    <td>${doc.date}</td>
+
+                    <td>
+                        <div class="status">
+                            Uploaded
+                        </div>
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button class="action-btn view-btn"
+                                onclick="viewDocument('${doc.url}')">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+                            <button class="action-btn download-btn"
+                                onclick="downloadDocument('${doc.url}', '${doc.name}')">
+
+                                <i class="fa-solid fa-download"></i>
+
+                            </button>
+
+                            <button class="action-btn delete-btn"
+                                onclick="deleteDocument(${index})">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                `;
+            });
+
+            updateStats();
+
+        }
+
+        function viewDocument(url) {
+            window.open(url, "_blank");
+        }
+
+        function downloadDocument(url, name) {
+
+            const a = document.createElement("a");
+
+            a.href = url;
+            a.download = name;
+
+            document.body.appendChild(a);
+
+            a.click();
+
+            document.body.removeChild(a);
+
+            showToast("Downloading " + name);
+
+        }
+
+        function deleteDocument(index) {
+
+            if (confirm("Delete this document?")) {
+
+                documents.splice(index, 1);
+
+                renderDocuments(documents);
+
+                showToast("Document Deleted");
+
+            }
+
+        }
+
+        document.getElementById("searchInput")
+            .addEventListener("keyup", function () {
+
+                const value = this.value.toLowerCase();
+
+                const filtered = documents.filter(doc =>
+                    doc.name.toLowerCase().includes(value)
+                );
+
+                renderDocuments(filtered);
+
+            });
+
+        function updateStats() {
+
+            document.getElementById("totalDocs").innerText =
+                documents.length;
+
+            let total = 0;
+
+            documents.forEach(doc => {
+
+                total += parseFloat(doc.size);
+
+            });
+
+            document.getElementById("storageUsed").innerText =
+                total.toFixed(2) + " MB";
+
+        }
+
+        function showToast(message) {
+
+            const toast = document.createElement("div");
+
+            toast.innerText = message;
+
+            toast.style.position = "fixed";
+            toast.style.bottom = "30px";
+            toast.style.right = "30px";
+            toast.style.background = "#0d6efd";
+            toast.style.color = "white";
+            toast.style.padding = "14px 24px";
+            toast.style.borderRadius = "14px";
+            toast.style.fontWeight = "600";
+            toast.style.zIndex = "9999";
+            toast.style.boxShadow = "0 0 20px rgba(0,0,0,0.4)";
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 2500);
+
+        }
+function logoutUser(){
+
+    const confirmLogout = confirm(
+        "Are you sure you want to logout?"
+    );
+
+    if(confirmLogout){
+
+        /* CLEAR SAVED DATA */
+
+        localStorage.clear();
+
+        /* SUCCESS MESSAGE */
+
+        alert("Logout Successful");
+
+        /* REDIRECT TO LOGIN PAGE */
+
+        window.location.href = "index.html";
+
+    }
+
+}
+    </script>
+
+</body>
+
+</html>

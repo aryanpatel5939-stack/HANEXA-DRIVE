@@ -1,0 +1,332 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+   <title>HANEXA DRIVE System - Sign Up</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  <style>  
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }  
+
+    body {  
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),   
+                    url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2072&auto=format&fit=crop'); /* EV Car Background */  
+        background-size: cover;  
+        background-position: center;  
+        height: 100vh;  
+        display: flex;  
+        flex-direction: column;  
+        align-items: center;  
+        justify-content: center;  
+        color: white;  
+    }  
+
+    .header-logo {  
+        text-align: center;  
+        margin-bottom: 20px;  
+    }  
+
+    .header-logo h2 { font-size: 28px; display: flex; align-items: center; justify-content: center; gap: 10px; }  
+    .header-logo p { font-size: 12px; opacity: 0.8; letter-spacing: 1px; }  
+
+    .login-card {  
+        background: white;  
+        width: 90%;  
+        max-width: 400px;  
+        padding: 30px;  
+        border-radius: 25px;  
+        color: #333;  
+        text-align: center;  
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);  
+    }  
+
+    .user-icon {  
+        background: linear-gradient(135deg, #0052ff, #00ff88);  
+        width: 60px;  
+        height: 60px;  
+        border-radius: 50%;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        margin: 0 auto 15px;  
+        color: white;  
+        font-size: 24px;  
+    }  
+
+    .login-card h3 { font-size: 22px; color: #1a1a1a; }  
+    .login-card p { font-size: 13px; color: #777; margin-bottom: 20px; }  
+
+    .input-group {  
+        position: relative;  
+        margin-bottom: 15px;  
+    }  
+
+    .input-group i {  
+        position: absolute;  
+        left: 15px;  
+        top: 50%;  
+        transform: translateY(-50%);  
+        color: #0052ff;  
+    }  
+
+    .input-group input {  
+        width: 100%;  
+        padding: 12px 15px 12px 45px;  
+        border: 1px solid #ddd;  
+        border-radius: 10px;  
+        outline: none;  
+        background: #f9f9f9;  
+    }  
+
+    .extra-options {  
+        display: flex;  
+        justify-content: space-between;  
+        font-size: 12px;  
+        margin-bottom: 20px;  
+        color: #555;  
+    }  
+
+    .login-btn {  
+        width: 100%;  
+        padding: 12px;  
+        border: none;  
+        border-radius: 12px;  
+        background: linear-gradient(to right, #0041ff, #00d4ff);  
+        color: white;  
+        font-weight: bold;  
+        font-size: 16px;  
+        cursor: pointer;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        gap: 10px;  
+    }  
+
+    .or-divider {  
+        margin: 20px 0;  
+        display: flex;  
+        align-items: center;  
+        color: #999;  
+        font-size: 12px;  
+    }  
+    .or-divider::before, .or-divider::after {  
+        content: ""; flex: 1; height: 1px; background: #ddd; margin: 0 10px;  
+    }  
+
+    .google-btn {  
+        width: 100%;  
+        padding: 10px;  
+        border: 1px solid #ddd;  
+        background: white;  
+        border-radius: 10px;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        gap: 10px;  
+        font-size: 14px;  
+        cursor: pointer;  
+    }  
+
+    .footer-links { margin-top: 15px; font-size: 13px; }  
+    .footer-links a { color: #0052ff; text-decoration: none; font-weight: 600; }  
+
+    .bottom-features {  
+        display: flex;  
+        justify-content: space-around;  
+        width: 100%;  
+        max-width: 500px;  
+        margin-top: 30px;  
+        text-align: center;  
+    }  
+    .feature-item { font-size: 10px; }  
+    .feature-item i {   
+        display: block; font-size: 20px; margin-bottom: 5px; color: #00ff88;  
+    }  
+</style>
+
+</head>  
+<body>  <div class="header-logo">  
+    <h2><i class="fas fa-cloud-bolt" style="color: #00ff88;"></i> HANEXA DRIVE System</h2>  
+    <p>Sustainable Future, Smarter Drive 🍃</p>  
+</div>  
+
+<div class="login-card">  
+    <div class="user-icon">  
+        <i class="fas fa-bolt"></i>  
+    </div>  
+    <h3>Create Account</h3>
+    <p>Create your new EV account</p>
+
+    <div class="input-group">
+
+    <i class="fas fa-user"></i>
+
+    <input type="text" id="name" placeholder="Full Name">
+
+</div>
+<div class="input-group"><i class="fas fa-calendar"></i>
+
+<input type="number" id="age" placeholder="Age">
+
+</div><div class="input-group"><i class="fas fa-phone"></i>
+
+<input type="tel" id="phone" placeholder="Phone Number">
+
+</div>
+<div class="input-group">  
+        <i class="far fa-envelope"></i>  
+        <input type="text" id="email" placeholder="Email">
+    </div>  
+
+    <div class="input-group">  
+        <i class="fas fa-lock"></i>  
+        <input type="password" id="password" placeholder="Password">  
+        <i class="far fa-eye-slash" style="left: auto; right: 15px; cursor: pointer; color: #999;"></i>  
+    </div>  
+
+    <div class="extra-options">  
+        <label><input type="checkbox"> Remember me</label>  
+      
+    </div>
+
+<button class="login-btn" id="loginBtn" onclick="signupUser()">
+
+    LOGIN
+
+</button>
+
+<div class="or-divider">OR</div>  
+
+    <button class="google-btn" onclick="openGoogle()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="18">   
+        Login with Google Account  
+    </button>  
+
+</div>  
+
+<div class="bottom-features">  
+    <div class="feature-item"><i class="fas fa-shield-alt"></i> Secure Login</div>  
+    <div class="feature-item"><i class="fas fa-bolt"></i> Fast Access</div>  
+    <div class="feature-item"><i class="fas fa-leaf"></i> Eco Friendly</div>  
+    <div class="feature-item"><i class="fas fa-chart-line"></i> Smart Monitoring</div>  
+</div>
+
+<script>
+function signupUser() {
+
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+    let phone = document.getElementById("phone").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    // 1. Empty check
+    if(name === "" || age === "" || phone === "" || email === "" || password === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    // 2. Save data in browser memory (localStorage)
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userAge", age);
+    localStorage.setItem("userPhone", phone);
+    localStorage.setItem("userEmail", email);   // ✔ FIXED LINE
+    localStorage.setItem("userPassword", password);
+
+    // 3. Success message
+    alert("Account Created Successfully");
+
+    // 4. Redirect to login page
+    window.location.href = "login.html";
+}
+const eyeIcon = document.querySelector(".fa-eye-slash");
+
+const passwordInput = document.getElementById("password");
+
+eyeIcon.addEventListener("click", () => {
+
+    if(passwordInput.type === "password") {
+
+        passwordInput.type = "text";
+
+        eyeIcon.classList.remove("fa-eye-slash");
+
+        eyeIcon.classList.add("fa-eye");
+
+    } else {
+
+        passwordInput.type = "password";
+
+        eyeIcon.classList.remove("fa-eye");
+
+        eyeIcon.classList.add("fa-eye-slash");
+
+    }
+
+});
+
+</script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getAuth,
+
+GoogleAuthProvider,
+
+signInWithPopup
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCHIhUCHedw4i3aG4BrJm63q5_AAfdM-Xg",
+
+    authDomain: "ev-smart-system-34e21.firebaseapp.com",
+
+    projectId: "ev-smart-system-34e21",
+
+    storageBucket: "ev-smart-system-34e21.firebasestorage.app",
+
+    messagingSenderId: "644518894996",
+
+    appId: "1:644518894996:web:0117aa50ab065d56014381"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+    prompt: "select_account"
+});
+window.openGoogle = function () {
+
+    signInWithPopup(auth, provider)
+
+    .then((result) => {
+        localStorage.setItem("userName", result.user.displayName);
+localStorage.setItem("userEmail", result.user.email);
+
+        localStorage.setItem("loggedIn", "true");
+
+        alert("Google Sign Up Successful");
+
+        window.location.href = "home.html";
+
+    })
+
+    .catch((error) => {
+
+        alert(error.message);
+
+    });
+
+};
+
+</script>
+</body>  
+</html>

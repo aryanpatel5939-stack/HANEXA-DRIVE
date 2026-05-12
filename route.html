@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HANEXA DRIVE - Map & Route</title>
+
+<!-- GOOGLE FONT -->
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<!-- FONT AWESOME -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#020817;
+color:white;
+overflow:hidden;
+
+}
+
+/* ======================= LAYOUT ======================= */
+
+.container{
+
+display:flex;
+height:100vh;
+width:100%;
+
+}
+
+/* ======================= SIDEBAR ======================= */
+
+.sidebar{
+
+width:280px;
+background:linear-gradient(180deg,#071321,#04101b);
+border-right:2px solid rgba(255,255,255,0.05);
+padding:25px 18px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+overflow-y:auto;
+
+}
+
+/* LOGO */
+
+.logo{
+
+font-size:58px;
+font-weight:700;
+line-height:1.05;
+color:#6dff3c;
+margin-bottom:35px;
+
+}
+
+/* MENU */
+
+.menu{
+
+display:flex;
+flex-direction:column;
+gap:8px;
+
+}
+
+.menu a{
+
+text-decoration:none;
+display:flex;
+align-items:center;
+gap:15px;
+padding:16px 18px;
+border-radius:18px;
+color:white;
+font-size:18px;
+font-weight:500;
+transition:0.3s;
+
+}
+
+.menu a i{
+
+width:24px;
+font-size:18px;
+
+}
+
+.menu a:hover{
+
+background:rgba(255,255,255,0.06);
+
+}
+
+/* ACTIVE */
+
+.menu a.active{
+
+background:linear-gradient(135deg,#00b7ff,#1ce3ff);
+box-shadow:
+0 0 25px rgba(0,183,255,0.45);
+
+}
+
+/* BOTTOM MENU */
+
+.bottom{
+
+display:flex;
+flex-direction:column;
+gap:8px;
+margin-top:20px;
+
+}
+
+.bottom a{
+
+text-decoration:none;
+display:flex;
+align-items:center;
+gap:15px;
+padding:16px 18px;
+border-radius:18px;
+color:white;
+font-size:18px;
+font-weight:500;
+transition:0.3s;
+
+}
+
+.bottom a i{
+
+width:24px;
+
+}
+
+.bottom a:hover{
+
+background:rgba(255,255,255,0.06);
+
+}
+
+/* LOGOUT */
+
+.logout{
+
+color:#ff6b6b !important;
+
+}
+
+/* ======================= MAIN ======================= */
+
+.main{
+
+flex:1;
+display:flex;
+flex-direction:column;
+height:100vh;
+
+}
+
+/* TOPBAR */
+
+.top{
+
+padding:18px 20px;
+background:#111a2e;
+display:flex;
+gap:12px;
+align-items:center;
+border-bottom:1px solid rgba(255,255,255,0.05);
+
+}
+
+.top input{
+
+flex:1;
+padding:14px 16px;
+border:none;
+outline:none;
+border-radius:12px;
+background:#0a1324;
+color:white;
+font-size:15px;
+
+}
+
+.top input::placeholder{
+
+color:#94a3b8;
+
+}
+
+.top button{
+
+padding:14px 20px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#00b7ff,#1ce3ff);
+color:white;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+
+}
+
+.top button:hover{
+
+transform:translateY(-2px);
+
+}
+
+/* MAP */
+
+#map{
+
+width:100%;
+height:100%;
+border:none;
+flex:1;
+
+}
+
+/* ======================= RESPONSIVE ======================= */
+
+@media(max-width:900px){
+
+.container{
+
+flex-direction:column;
+
+}
+
+.sidebar{
+
+width:100%;
+height:auto;
+
+}
+
+.main{
+
+height:auto;
+
+}
+
+#map{
+
+height:80vh;
+
+}
+
+.logo{
+
+font-size:42px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+<div>
+
+<!-- LOGO -->
+
+<div class="logo">
+HANEXA<br>DRIVE
+</div>
+
+<!-- MENU -->
+
+<div class="menu">
+
+<a href="home.html">
+<i class="fa-solid fa-house"></i>
+Home
+</a>
+
+<a href="realtimedata.html">
+<i class="fa-solid fa-chart-line"></i>
+Real-time Data
+</a>
+
+<a href="batteryhealth.html">
+<i class="fa-solid fa-battery-three-quarters"></i>
+Battery Health
+</a>
+
+<a href="cooling.html">
+<i class="fa-regular fa-snowflake"></i>
+Cooling System
+</a>
+
+<a href="route.html"
+class="active">
+<i class="fa-regular fa-map"></i>
+Map & Route
+</a>
+
+<a href="document.html">
+<i class="fa-regular fa-file"></i>
+Documents
+</a>
+
+<a href="alert.html">
+<i class="fa-regular fa-bell"></i>
+Alerts
+</a>
+
+<a href="helpcenter.html">
+<i class="fa-solid fa-headset"></i>
+Help Center
+</a>
+
+</div>
+
+</div>
+
+<!-- BOTTOM -->
+
+<div class="bottom">
+
+<a href="about.html">
+<i class="fa-solid fa-circle-info"></i>
+About
+</a>
+
+<a href="setting.html">
+<i class="fa-solid fa-gear"></i>
+Settings
+</a>
+
+ <a href="#"
+class="logout"
+onclick="logoutUser()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+<!-- TOP SEARCH -->
+
+<div class="top">
+
+<input id="place"
+placeholder="Enter location (city, area, etc.)">
+
+<button onclick="updateMap()">
+
+<i class="fa-solid fa-location-dot"></i>
+Show
+
+</button>
+
+</div>
+
+<!-- GOOGLE MAP -->
+
+<iframe
+id="map"
+src="https://www.google.com/maps?q=India&output=embed">
+</iframe>
+
+</div>
+
+</div>
+
+<script>
+
+function updateMap(){
+
+let place =
+document.getElementById("place").value;
+
+if(!place){
+
+alert("Enter location");
+return;
+
+}
+
+let url =
+"https://www.google.com/maps?q=" +
+encodeURIComponent(place) +
+"&output=embed";
+
+document.getElementById("map").src = url;
+
+}
+/* LOGOUT FUNCTION */
+
+function logoutUser(){
+
+let confirmLogout =
+confirm("Are you sure you want to logout?");
+
+if(confirmLogout){
+
+localStorage.removeItem("loggedIn");
+
+window.location.href = "index.html";
+
+}
+
+}
+</script>
+
+</body>
+</html>

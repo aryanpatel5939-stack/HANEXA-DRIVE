@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0" />
+
+  <title>HANEXA DRIVE - Settings</title>
+
+  <link rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+  <link rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #020817;
+      color: white;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(180deg, #071321, #04101b);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 30px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .logo {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #6dff3c;
+      margin-bottom: 40px;
+    }
+
+    .menu,
+    .bottom-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu a,
+    .bottom-menu a {
+      text-decoration: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      font-size: 17px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .menu a:hover,
+    .bottom-menu a:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .menu a.active,
+    .bottom-menu a.active {
+      background: linear-gradient(135deg, #00b7ff, #1cf0ff);
+      box-shadow: 0 0 25px rgba(0, 183, 255, 0.45);
+    }
+
+    .logout-btn {
+      color: #ff6b6b !important;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 107, 107, 0.12) !important;
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      flex: 1;
+      padding: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .title h1 {
+      font-size: 42px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .title p {
+      color: #94a3b8;
+      font-size: 15px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .bell {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* ================= GRID ================= */
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: #071122;
+      border-radius: 22px;
+      padding: 22px;
+      min-height: 170px;
+      border: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.45);
+    }
+
+    .left {
+      display: flex;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      min-width: 64px;
+    }
+
+    .green {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+
+    .purple {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+    }
+
+    .blue {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+    }
+
+    .orange {
+      background: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+    }
+
+    .yellow {
+      background: rgba(250, 204, 21, 0.15);
+      color: #fde047;
+    }
+
+    .cyan {
+      background: rgba(6, 182, 212, 0.15);
+      color: #22d3ee;
+    }
+
+    .pink {
+      background: rgba(236, 72, 153, 0.15);
+      color: #f472b6;
+    }
+
+    .content h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .content p {
+      color: #a5b4cc;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 230px;
+    }
+
+    .control {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .control input,
+    .control select {
+      background: #08101f;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: white;
+      border-radius: 10px;
+      padding: 12px 14px;
+      min-width: 120px;
+      outline: none;
+    }
+
+    .unit {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 62px;
+      height: 32px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #334155;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      left: 4px;
+      top: 4px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle input:checked + .slider {
+      background: #22c55e;
+    }
+
+    .toggle input:checked + .slider::before {
+      transform: translateX(30px);
+    }
+
+    .arrow-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 10px;
+      background: #0b1425;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .arrow-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      background: #071122;
+      border-radius: 18px;
+      padding: 18px 22px;
+      color: #c7d2fe;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .save-status {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #16a34a;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 0.4s;
+      z-index: 999;
+    }
+
+    .save-status.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width:1300px) {
+
+      .settings-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+    @media(max-width:900px) {
+
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+  <div>
+
+    <div class="logo">
+      HANEXA<br>DRIVE
+    </div>
+
+    <div class="menu">
+
+      <a href="home.html">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+
+      <a href="realtimedata.html">
+        <i class="fa-solid fa-chart-line"></i>
+        Real-time Data
+      </a>
+
+      <a href="batteryhealth.html">
+        <i class="fa-solid fa-battery-three-quarters"></i>
+        Battery Health
+      </a>
+
+      <a href="cooling.html">
+        <i class="fa-regular fa-snowflake"></i>
+        Cooling System
+      </a>
+
+      <a href="route.html">
+        <i class="fa-regular fa-map"></i>
+        Map & Route
+      </a>
+
+      <a href="document.html">
+        <i class="fa-regular fa-file"></i>
+        Documents
+      </a>
+
+      <a href="alert.html">
+        <i class="fa-regular fa-bell"></i>
+        Alerts
+      </a>
+
+      <a href="helpcenter.html">
+        <i class="fa-solid fa-headset"></i>
+        Help Center
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- BOTTOM MENU -->
+
+  <div class="bottom-menu">
+
+    <a href="about.html">
+      <i class="fa-solid fa-circle-info"></i>
+      About
+    </a>
+
+    <a href="setting.html"
+      class="active">
+      <i class="fa-solid fa-gear"></i>
+      Settings
+    </a>
+
+    <!-- LOGOUT BUTTON -->
+
+    <a href="#"
+      class="logout-btn"
+      onclick="logoutUser()">
+
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Logout
+
+    </a>
+
+  </div>
+
+</aside>
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <div class="title">
+
+        <h1>SETTINGS</h1>
+
+        <p>
+          Configure EV system preferences and controls
+        </p>
+
+      </div>
+
+      <div class="top-actions">
+
+        <div class="bell">
+          🔔
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SETTINGS GRID -->
+
+    <div class="settings-grid">
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon green">⚙</div>
+
+          <div class="content">
+
+            <h3>Alert Thresholds</h3>
+
+            <p>
+              Configure low and high battery alert levels
+            </p>
+
+          </div>
+
+        </div>
+
+        <button class="arrow-btn"
+          onclick="alert('Alert Threshold Settings Opened')">
+
+          ›
+
+        </button>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon purple">🌡</div>
+
+          <div class="content">
+
+            <h3>Temperature Limits</h3>
+
+            <p>
+              Configure battery safe temperature range
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="control">
+
+          <input type="number"
+            id="tempMin"
+            value="15">
+
+          <input type="number"
+            id="tempMax"
+            value="45">
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon blue">⚡</div>
+
+          <div class="content">
+
+            <h3>Voltage Limits</h3>
+
+            <p>
+              Configure battery voltage safety limits
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="control">
+
+          <input type="number"
+            id="voltageMin"
+            value="300">
+
+          <input type="number"
+            id="voltageMax"
+            value="420">
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon orange">🔋</div>
+
+          <div class="content">
+
+            <h3>Battery Capacity</h3>
+
+            <p>
+              Configure total EV battery capacity
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="control">
+
+          <input type="number"
+            id="batteryCapacity"
+            value="60">
+
+          <div class="unit">
+            kWh
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon green">🌀</div>
+
+          <div class="content">
+
+            <h3>Cooling Mode</h3>
+
+            <p>
+              Configure cooling performance settings
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="control">
+
+          <select id="coolingMode">
+
+            <option>Auto</option>
+            <option>Eco</option>
+            <option>Manual</option>
+            <option>High Performance</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon blue">💧</div>
+
+          <div class="content">
+
+            <h3>Coolant Flow</h3>
+
+            <p>
+              Configure coolant circulation speed
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="control">
+
+          <input type="number"
+            id="flowRate"
+            value="2.5"
+            step="0.1">
+
+          <div class="unit">
+            L/min
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon yellow">🔔</div>
+
+          <div class="content">
+
+            <h3>Notifications</h3>
+
+            <p>
+              Enable or disable EV notifications
+            </p>
+
+          </div>
+
+        </div>
+
+        <label class="toggle">
+
+          <input type="checkbox"
+            id="notificationToggle"
+            checked>
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon cyan">🔊</div>
+
+          <div class="content">
+
+            <h3>Alarm Volume</h3>
+
+            <p>
+              Configure alert alarm sound volume
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="control">
+
+          <select id="alarmVolume">
+
+            <option>Low</option>
+            <option>Medium</option>
+            <option selected>High</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon pink">☀</div>
+
+          <div class="content">
+
+            <h3>Brightness</h3>
+
+            <p>
+              Configure display brightness level
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="control">
+
+          <select id="brightness">
+
+            <option>30%</option>
+            <option>50%</option>
+            <option selected>70%</option>
+            <option>100%</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon blue">🌙</div>
+
+          <div class="content">
+
+            <h3>Dark Mode</h3>
+
+            <p>
+              Enable or disable dashboard dark theme
+            </p>
+
+          </div>
+
+        </div>
+
+        <label class="toggle">
+
+          <input type="checkbox"
+            id="darkModeToggle"
+            checked>
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon purple">☁</div>
+
+          <div class="content">
+
+            <h3>Backup System</h3>
+
+            <p>
+              Download all saved EV settings backup
+            </p>
+
+          </div>
+
+        </div>
+
+        <button class="arrow-btn"
+          onclick="backupSystem()">
+
+          ›
+
+        </button>
+
+      </div>
+
+      <!-- CARD -->
+
+      <div class="card">
+
+        <div class="left">
+
+          <div class="icon cyan">ⓘ</div>
+
+          <div class="content">
+
+            <h3>System Information</h3>
+
+            <p>
+              View EV firmware and system details
+            </p>
+
+          </div>
+
+        </div>
+
+        <button class="arrow-btn"
+          onclick="showSystemInfo()">
+
+          ›
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer-note">
+
+      ℹ All settings are automatically saved in real-time.
+
+    </div>
+
+  </main>
+
+  <!-- SAVE MESSAGE -->
+
+  <div class="save-status"
+    id="saveStatus">
+
+    Settings Saved Successfully
+
+  </div>
+
+  <script>
+
+    // ================= SAVE SETTINGS =================
+
+    const allInputs =
+      document.querySelectorAll(
+        'input, select'
+      );
+
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+
+        allInputs.forEach(input => {
+
+          const savedValue =
+            localStorage.getItem(
+              input.id
+            );
+
+          if (savedValue !== null) {
+
+            if (
+              input.type === 'checkbox'
+            ) {
+
+              input.checked =
+                savedValue === 'true';
+
+            } else {
+
+              input.value =
+                savedValue;
+
+            }
+
+          }
+
+        });
+
+      });
+
+    allInputs.forEach(input => {
+
+      input.addEventListener(
+        'change',
+        () => {
+
+          if (
+            input.type === 'checkbox'
+          ) {
+
+            localStorage.setItem(
+              input.id,
+              input.checked
+            );
+
+          } else {
+
+            localStorage.setItem(
+              input.id,
+              input.value
+            );
+
+          }
+
+          showSaveMessage();
+
+        });
+
+    });
+
+    // ================= SAVE POPUP =================
+
+    function showSaveMessage() {
+
+      const saveBox =
+        document.getElementById(
+          'saveStatus'
+        );
+
+      saveBox.classList.add(
+        'show'
+      );
+
+      setTimeout(() => {
+
+        saveBox.classList.remove(
+          'show'
+        );
+
+      }, 2000);
+
+    }
+
+    // ================= BACKUP =================
+
+    function backupSystem() {
+
+      const settings = {};
+
+      allInputs.forEach(input => {
+
+        settings[input.id] =
+          input.type === 'checkbox'
+            ? input.checked
+            : input.value;
+
+      });
+
+      const dataStr =
+        JSON.stringify(
+          settings,
+          null,
+          2
+        );
+
+      const blob =
+        new Blob(
+          [dataStr],
+          {
+            type:
+              'application/json'
+          }
+        );
+
+      const url =
+        URL.createObjectURL(blob);
+
+      const a =
+        document.createElement('a');
+
+      a.href = url;
+
+      a.download =
+        'hanexa-settings-backup.json';
+
+      a.click();
+
+      showSaveMessage();
+
+    }
+
+    // ================= SYSTEM INFO =================
+
+    function showSystemInfo() {
+
+      const info = `
+
+HANEXA DRIVE SYSTEM
+
+Firmware Version : v2.1.4
+Battery Health   : 96%
+Cooling Status   : Active
+Storage Used     : 12.4 GB
+Last Backup      : Today
+System Status    : Stable
+
+`;
+
+      alert(info);
+
+    }
+
+    // ================= DARK MODE =================
+
+    const darkToggle =
+      document.getElementById(
+        'darkModeToggle'
+      );
+
+    darkToggle.addEventListener(
+      'change',
+      () => {
+
+        if (!darkToggle.checked) {
+
+          document.body.style.background =
+            '#e5e7eb';
+
+          document.body.style.color =
+            '#111827';
+
+        } else {
+
+          document.body.style.background =
+            '#020817';
+
+          document.body.style.color =
+            '#ffffff';
+
+        }
+
+      });
+
+    // ================= LOGOUT =================
+
+    function logoutUser() {
+
+      const confirmLogout =
+        confirm(
+          "Are you sure you want to logout?"
+        );
+
+      if (confirmLogout) {
+
+        alert(
+          "Logged out successfully"
+        );
+
+        // REDIRECT
+
+        window.location.href =
+          "login.html";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>

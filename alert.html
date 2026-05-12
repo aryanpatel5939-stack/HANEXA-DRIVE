@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>HANEXA DRIVE Alert System</title>
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #020812;
+            color: white;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar{
+            width:280px;
+            background:linear-gradient(180deg,#071321,#04101b);
+            padding:30px 22px;
+            border-right:1px solid rgba(255,255,255,0.05);
+            position:fixed;
+            left:0;
+            top:0;
+            bottom:0;
+            overflow-y:auto;
+        }
+
+        .logo{
+            color:#61e65c;
+            font-size:42px;
+            font-weight:700;
+            margin-bottom:45px;
+        }
+
+        .menu{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .menu a{
+            text-decoration:none;
+            color:#d8e0ea;
+        }
+
+        .menu-item{
+            display:flex;
+            align-items:center;
+            gap:16px;
+            padding:16px 18px;
+            border-radius:16px;
+            font-size:18px;
+            transition:0.3s;
+            cursor:pointer;
+        }
+
+        .menu-item:hover{
+            background:rgba(255,255,255,0.06);
+        }
+
+        .menu-item.active{
+            background:#0d6efd;
+            color:white;
+            box-shadow:0 0 25px rgba(13,110,253,0.4);
+        }
+
+        .logout{
+            color:#ff5f5f;
+            margin-top:18px;
+        }
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-container {
+            width: calc(100% - 280px);
+            margin-left: 280px;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .page-title {
+            font-size: 45px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, #071321, #04101b);
+            border-radius: 25px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.45);
+        }
+
+        /* ================= LEFT SIDE ================= */
+
+        .battery-card {
+            text-align: center;
+        }
+
+        .battery-image img {
+            width: 260px;
+            filter: drop-shadow(0 0 25px #00ff66);
+        }
+
+        .ring {
+            width: 240px;
+            height: 25px;
+            background: radial-gradient(circle, #00a2ff, transparent 70%);
+            margin: auto;
+            border-radius: 50%;
+            filter: blur(4px);
+            margin-top: -15px;
+        }
+
+        .success-title {
+            color: #10ff65;
+            font-size: 38px;
+            font-weight: 600;
+            margin-top: 25px;
+        }
+
+        .success-sub {
+            color: #b2c0ce;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .all-good {
+            color: #11ff68;
+            font-size: 30px;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+
+        .all-good i {
+            margin-right: 10px;
+        }
+
+        /* SETTINGS */
+
+        .settings-card {
+            margin-top: 25px;
+        }
+
+        .settings-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .range-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 18px;
+        }
+
+        .range-left {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .range-left i {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        .green-icon {
+            background: rgba(0, 255, 102, 0.12);
+            color: #10ff65;
+        }
+
+        .orange-icon {
+            background: rgba(255, 166, 0, 0.15);
+            color: orange;
+        }
+
+        .range-left h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .range-left p {
+            color: #98a8b7;
+            font-size: 14px;
+        }
+
+        select {
+            background: #071726;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .update-btn {
+            width: 100%;
+            border: none;
+            padding: 16px;
+            margin-top: 10px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #0d6efd, #1488ff);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 119, 255, 0.5);
+        }
+
+        /* ================= RIGHT SIDE ================= */
+
+        .alert-title {
+            font-size: 34px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .table-head,
+        .alert-row {
+            display: grid;
+            grid-template-columns: 1.8fr 130px 170px;
+            align-items: center;
+        }
+
+        .table-head {
+            color: #97a6b6;
+            padding: 0 10px;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .alert-row {
+            padding: 18px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .alert-info {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .alert-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        .green {
+            background: rgba(0, 255, 102, 0.15);
+            color: #11ff68;
+        }
+
+        .orange {
+            background: rgba(255, 166, 0, 0.15);
+            color: orange;
+        }
+
+        .red {
+            background: rgba(255, 0, 0, 0.15);
+            color: #ff5555;
+        }
+
+        .purple {
+            background: rgba(162, 0, 255, 0.15);
+            color: #b66cff;
+        }
+
+        .blue {
+            background: rgba(0, 174, 255, 0.15);
+            color: #00c3ff;
+        }
+
+        .yellow {
+            background: rgba(255, 193, 7, 0.15);
+            color: #ffc107;
+        }
+
+        .alert-info h3 {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .alert-info p {
+            color: #9eacba;
+            font-size: 14px;
+        }
+
+        .status {
+            background: rgba(0, 255, 102, 0.15);
+            color: #10ff65;
+            padding: 10px 18px;
+            border-radius: 12px;
+            width: fit-content;
+            font-weight: 600;
+        }
+
+        /* ================= TOGGLE BUTTONS ================= */
+
+        .notify-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notify-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            color: #cdd8e2;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .notify-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .notify-btn.active {
+            background: #0d6efd;
+            color: white;
+            box-shadow: 0 0 18px rgba(0, 119, 255, 0.5);
+        }
+
+        /* FOOTER */
+
+        .bottom-bar {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, #071321, #04101b);
+            padding: 20px 25px;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bottom-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            color: #a0afbf;
+        }
+
+        .bottom-info i {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 119, 255, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0d8bff;
+        }
+
+        .test-btn {
+            border: 2px solid #0d6efd;
+            background: transparent;
+            color: #0d8bff;
+            padding: 14px 30px;
+            border-radius: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .test-btn:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:900px){
+
+            body{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                position:relative;
+                height:auto;
+            }
+
+            .main-container{
+                width:100%;
+                margin-left:0;
+            }
+
+        }
+
+        @media(max-width:768px) {
+
+            .table-head,
+            .alert-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .notify-controls {
+                justify-content: flex-start;
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+   <!-- SIDEBAR -->
+
+<aside class="sidebar">  
+
+    <div class="logo">  
+        HANEXA DRIVE  
+    </div>  
+
+    <div class="menu">  
+
+        <a href="home.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-house"></i>  
+                Home  
+            </div>  
+        </a>  
+
+        <a href="realtimedata.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-chart-line"></i>  
+                Real-time Data  
+            </div>  
+        </a>  
+
+        <a href="batteryhealth.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-battery-half"></i>  
+                Battery Health  
+            </div>  
+        </a>  
+
+        <a href="cooling.html">  
+            <div class="menu-item">  
+                <i class="fa-regular fa-snowflake"></i>  
+                Cooling System  
+            </div>  
+        </a>  
+
+        <a href="route.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-map"></i>  
+                Map & Route  
+            </div>  
+        </a>  
+
+        <a href="document.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-file"></i>  
+                Documents  
+            </div>  
+        </a>  
+
+        <a href="alert.html">  
+            <div class="menu-item active">  
+                <i class="fa-solid fa-bell"></i>  
+                Alerts  
+            </div>  
+        </a>  
+
+        <a href="helpcenter.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-headset"></i>  
+                Help Center  
+            </div>  
+        </a>  
+
+        <a href="about.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-circle-info"></i>  
+                About  
+            </div>  
+        </a>  
+
+        <a href="setting.html">  
+            <div class="menu-item">  
+                <i class="fa-solid fa-gear"></i>  
+                Settings  
+            </div>  
+        <a href="javascript:void(0)" onclick="logoutUser()">  
+    <div class="menu-item logout">  
+        <i class="fa-solid fa-right-from-bracket"></i>  
+        Logout  
+    </div>  
+</a> 
+
+    </div>  
+
+</aside>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-container">
+
+        <div class="page-title">ALERTS</div>
+
+        <div class="main-grid">
+
+            <!-- LEFT SIDE -->
+
+            <div>
+
+                <!-- BATTERY CARD -->
+
+                <div class="card battery-card">
+
+                    <div class="battery-image">
+
+                        <img src="https://cdn-icons-png.flaticon.com/512/3103/3103446.png"
+                            alt="">
+
+                        <div class="ring"></div>
+
+                    </div>
+
+                    <div class="success-title">
+                        No Active Alerts
+                    </div>
+
+                    <div class="success-sub">
+                        All systems are normal
+                    </div>
+
+                    <div class="all-good">
+                        <i class="fa-regular fa-circle-check"></i>
+                        All Good!
+                    </div>
+
+                </div>
+
+                <!-- SETTINGS -->
+
+                <div class="card settings-card">
+
+                    <div class="settings-title">
+                        Set Battery Alert Range
+                    </div>
+
+                    <div class="range-box">
+
+                        <div class="range-left">
+
+                            <i class="fa-solid fa-battery-quarter green-icon"></i>
+
+                            <div>
+                                <h3>Minimum Battery %</h3>
+                                <p>Alert when below</p>
+                            </div>
+
+                        </div>
+
+                        <select id="minBattery">
+                            <option>10%</option>
+                            <option selected>20%</option>
+                            <option>30%</option>
+                            <option>40%</option>
+                        </select>
+
+                    </div>
+
+                    <div class="range-box">
+
+                        <div class="range-left">
+
+                            <i class="fa-solid fa-battery-full orange-icon"></i>
+
+                            <div>
+                                <h3>Maximum Battery %</h3>
+                                <p>Alert when above</p>
+                            </div>
+
+                        </div>
+
+                        <select id="maxBattery">
+                            <option>80%</option>
+                            <option selected>90%</option>
+                            <option>95%</option>
+                            <option>100%</option>
+                        </select>
+
+                    </div>
+
+                    <button class="update-btn" onclick="saveSettings()">
+                        Update Settings
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+
+            <div class="card">
+
+                <div class="alert-title">
+                    Alert Types & Notifications
+                </div>
+
+                <div class="table-head">
+                    <div>Alert Type</div>
+                    <div>Status</div>
+                    <div>Notify</div>
+                </div>
+
+                <!-- ALERT ROWS -->
+
+                <div id="alertsContainer"></div>
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="bottom-bar">
+
+            <div class="bottom-info">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    You will receive audio and visual alarms when any alert is triggered.
+                </span>
+
+            </div>
+
+            <button class="test-btn" onclick="testAlarm()">
+                <i class="fa-solid fa-volume-high"></i>
+                Test Alarm
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        const alerts = [
+            {
+                icon: "fa-battery-quarter",
+                color: "green",
+                title: "Low Battery Alert",
+                text: "Battery level below minimum"
+            },
+
+            {
+                icon: "fa-battery-full",
+                color: "orange",
+                title: "High Battery Alert",
+                text: "Battery level above maximum"
+            },
+
+            {
+                icon: "fa-temperature-three-quarters",
+                color: "red",
+                title: "High Temperature Alert",
+                text: "Battery temperature too high"
+            },
+
+            {
+                icon: "fa-bolt",
+                color: "purple",
+                title: "High Voltage Alert",
+                text: "Battery voltage too high"
+            },
+
+            {
+                icon: "fa-wave-square",
+                color: "blue",
+                title: "High Current Alert",
+                text: "Battery current too high"
+            },
+
+            {
+                icon: "fa-fan",
+                color: "blue",
+                title: "Cooling System Alert",
+                text: "Cooling system not working"
+            },
+
+            {
+                icon: "fa-triangle-exclamation",
+                color: "yellow",
+                title: "Sensor Error Alert",
+                text: "Issue in one or more sensors"
+            },
+
+            {
+                icon: "fa-link-slash",
+                color: "orange",
+                title: "Connection Loss Alert",
+                text: "Communication with battery lost"
+            }
+        ];
+
+        const container = document.getElementById("alertsContainer");
+
+        alerts.forEach((alert, index) => {
+
+            container.innerHTML += `
+
+            <div class="alert-row">
+
+                <div class="alert-info">
+
+                    <div class="alert-icon ${alert.color}">
+                        <i class="fa-solid ${alert.icon}"></i>
+                    </div>
+
+                    <div>
+                        <h3>${alert.title}</h3>
+                        <p>${alert.text}</p>
+                    </div>
+
+                </div>
+
+                <div class="status">
+                    Active
+                </div>
+
+                <div class="notify-controls">
+
+                    <button class="notify-btn"
+                        onclick="toggleBell(this, '${alert.title}')">
+
+                        <i class="fa-regular fa-bell"></i>
+
+                    </button>
+
+                    <button class="notify-btn"
+                        onclick="toggleSound(this, '${alert.title}')">
+
+                        <i class="fa-solid fa-volume-high"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+        function toggleBell(button, alertName) {
+
+            button.classList.toggle("active");
+
+            if (button.classList.contains("active")) {
+
+                showToast(alertName + " Bell Notification ON");
+
+            } else {
+
+                showToast(alertName + " Bell Notification OFF");
+
+            }
+
+        }
+
+        function toggleSound(button, alertName) {
+
+            button.classList.toggle("active");
+
+            if (button.classList.contains("active")) {
+
+                playBeep();
+
+                showToast(alertName + " Sound Alert ON");
+
+            } else {
+
+                showToast(alertName + " Sound Alert OFF");
+
+            }
+
+        }
+
+        function saveSettings() {
+
+            const min = document.getElementById("minBattery").value;
+
+            const max = document.getElementById("maxBattery").value;
+
+            showToast(`Settings Updated: Min ${min} | Max ${max}`);
+
+        }
+
+        function testAlarm() {
+
+            playBeep();
+
+            showToast("Alarm Test Successful");
+
+        }
+
+        function playBeep() {
+
+            const audio = new Audio(
+                "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
+            );
+
+            audio.play();
+
+        }
+
+        function showToast(message) {
+
+            const toast = document.createElement("div");
+
+            toast.innerText = message;
+
+            toast.style.position = "fixed";
+            toast.style.bottom = "30px";
+            toast.style.right = "30px";
+            toast.style.padding = "14px 22px";
+            toast.style.background = "#0d6efd";
+            toast.style.color = "white";
+            toast.style.borderRadius = "14px";
+            toast.style.fontWeight = "600";
+            toast.style.zIndex = "9999";
+            toast.style.boxShadow = "0 0 20px rgba(0,0,0,0.4)";
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 2500);
+
+        }
+/* LOGOUT FUNCTION */
+
+function logoutUser() {
+
+    const confirmLogout =
+    confirm("Are you sure you want to logout?");
+
+    if(confirmLogout){
+
+        // USER DATA REMOVE
+        localStorage.clear();
+
+        // SUCCESS MESSAGE
+        showToast("Logout Successful");
+
+        // LOGIN PAGE OPEN
+        setTimeout(() => {
+
+            window.location.href = "index.html";
+
+        },1000);
+
+    }
+
+}
+    </script>
+
+</body>
+
+</html>
